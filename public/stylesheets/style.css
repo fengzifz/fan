@@ -1,0 +1,32 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/* Background */
+.bg-black {
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Main Menu */
+.main-menu {
+	margin-top: 8px;
+}
+
+.main-menu li {
+	float: left;
+}
+
+.main-menu li a {
+	color: #fff;
+}
+
+.main-menu li.active a {
+	background-color: #eee;
+	text-decoration: none;
+	color: #000;
+}
