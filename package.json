@@ -7,6 +7,8 @@
   },
   "dependencies": {
     "express": "3.5.1",
-    "jade": "*"
+    "jade": "*",
+    "connect-mongo": "*",
+    "mongodb": "2.4.9"
   }
 }
