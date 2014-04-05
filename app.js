@@ -30,7 +30,7 @@ var app = express();
 app.set('port', process.env.PORT || 3000); // 端口
 app.set('views', path.join(__dirname, 'views')); // views
 app.set('view engine', 'jade'); // 模板引擎
-app.use(express.favicon());
+// app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -40,6 +40,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser()); // 用于解析cookie
 
+// express.session() 提供会话支持，设置 store 为 MongoStore 的实例，把会话信息储存到数据库中
 app.use(express.session({
 	secret: settings.cookieSecret,
 	store: new MongoStore({
@@ -47,21 +48,19 @@ app.use(express.session({
     })
 }));
 
+// Routes
+// app.use(express.router(routes)) 是在 express 3.0 下面无法兼容
+// app.use(express.router(routes));
+
+// express 3.0 要使用下面的路由方法
+app.use(app.router);
+routes(app);
+
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
-// routes
-app.get('/', routes.index);
-app.get('/u/:user', routes.user);
-app.post('/post', routes.post);
-app.get('/reg', routes.reg);
-app.post('/reg', routes.doReg);
-app.get('/login', routes.login);
-app.post('/login', routes.doLogin);
-app.get('/logout', routes.logout);
 
 
 http.createServer(app).listen(app.get('port'), function(){
