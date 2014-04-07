@@ -1,4 +1,5 @@
 var crypto = require('crypto');
+var User = require('../models/user.js');
 
 // res.render 调用模板引擎，并将其产生的页面直接返回给客户端
 module.exports = function(app){
@@ -26,7 +27,7 @@ module.exports = function(app){
 
 		// MD5 加密
 		var md5 = crypto.createHash('md5');
-		var password = md5.update(req.body.password).digset('base64');
+		var password = md5.update(req.body.password).digest('base64');
 
 		var newUser = new User({
 			name: req.body.username,
@@ -44,7 +45,7 @@ module.exports = function(app){
 				return res.redirect('/reg');
 			}
 
-			
+
 			// 如果不存在则新增用户
 			newUser.save(function(err){
 				if(err){
