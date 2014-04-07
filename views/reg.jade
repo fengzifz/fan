@@ -1,4 +1,17 @@
 extends layout
 
 block content
-	p damon
+	form.form-horizontal(method='post')
+		fieldset
+			legend 用户注册
+			div.control-group
+				div.controls
+					input#username.form-control(name='username', type='text', placeholder='Username')
+			div.control-group
+				div.controls
+					input#password.form-control(name='password', type='password', placeholder='Password')
+			div.control-group
+				div.controls
+					input#password-repeat.form-control(name='password-repeat', type='password', placeholder='Confirm password')
+			div.form-actions
+				button.btn.btn-primary(type='submie') 注册
