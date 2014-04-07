@@ -24,38 +24,47 @@ var MongoStore = require('connect-mongo')(express);
 
 var settings = require('./settings');
 
+// Make express 3.0+ support flash method.
+var flash = require('connect-flash');
+
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || 3000); // 端口
-app.set('views', path.join(__dirname, 'views')); // views
-app.set('view engine', 'jade'); // 模板引擎
-// app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser()); // 用于解析cookie
+// 环境配置
+app.configure(function(){
+	
+	app.set('port', process.env.PORT || 3000); // 端口
+	app.set('views', path.join(__dirname, 'views')); // views
+	app.set('view engine', 'jade'); // 模板引擎
+	app.use(flash());
+	// app.use(express.favicon());
+	app.use(express.logger('dev'));
+	app.use(express.json());
+	app.use(express.urlencoded());
+	app.use(express.static(path.join(__dirname, 'public')));
+	app.use(express.bodyParser());
+	app.use(express.methodOverride());
+	app.use(express.cookieParser()); // 用于解析cookie
 
-// express.session() 提供会话支持，设置 store 为 MongoStore 的实例，把会话信息储存到数据库中
-app.use(express.session({
-	secret: settings.cookieSecret,
-	store: new MongoStore({
-      db: settings.db
-    })
-}));
+	// express.session() 提供会话支持，设置 store 为 MongoStore 的实例，把会话信息储存到数据库中
+	app.use(express.session({
+	    secret: settings.cookieSecret,
+	    key: settings.db,//cookie name
+	    cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+	    store: new MongoStore({
+	      db: settings.db
+	  })
+	}));
 
-// Routes
-// app.use(express.router(routes)) 是在 express 3.0 下面无法兼容
-// app.use(express.router(routes));
 
-// express 3.0 要使用下面的路由方法
-app.use(app.router);
-routes(app);
+	// Routes
+	// app.use(express.router(routes)) 是在 express 3.0 下面无法兼容
+	// app.use(express.router(routes));
 
+	// express 3.0 要使用下面的路由方法
+	app.use(app.router);
+	routes(app);
+
+});
 
 // development only
 if ('development' == app.get('env')) {

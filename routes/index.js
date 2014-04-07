@@ -17,4 +17,13 @@ module.exports = function(app){
 			title: '注册和登录'
 		});
 	});
+
+	// 注册表单
+	app.post('/reg', function(req, res){
+		// 检查两次的密码是否正确
+		if(req.body['password-repeat'] != req.body['password']){
+			req.flash('error', '两次输入的密码不一致');
+			return res.redirect('/reg');
+		}
+	});
 }
