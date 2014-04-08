@@ -51,9 +51,17 @@ app.configure(function(){
 	    key: settings.db,//cookie name
 	    cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
 	    store: new MongoStore({
-	      db: settings.db
-	  })
+	        db: settings.db
+	    })
 	}));
+
+	app.use(function(req, res, next){
+		res.locals.user = req.session.user;
+		res.locals.error = req.flash('error');
+		res.locals.success = req.flash('success');
+		console.log(res.locals.error + ', ' + res.locals.success);
+		next();
+	});
 
 
 	// Routes
