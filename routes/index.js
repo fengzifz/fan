@@ -10,6 +10,12 @@ module.exports = function(app){
 		});
 	});
 
+	app.get('/logout', function(req, res){
+		req.session.user = null;
+		req.flash('success', 'Logout Successfully.');
+		return res.redirect('/reg');
+	});
+
 	// 注册和登录页面
 	app.get('/reg', function(req, res){
 		res.render('reg', {
@@ -54,7 +60,7 @@ module.exports = function(app){
 				}
 
 				req.session.user = newUser;
-				req.flash('success', '注册成个');
+				req.flash('success', '注册成功');
 				res.redirect('/');
 			});
 		});
