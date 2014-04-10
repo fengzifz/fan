@@ -10,17 +10,30 @@ module.exports = function(app){
 		});
 	});
 
+	// 退出
 	app.get('/logout', function(req, res){
 		req.session.user = null;
 		req.flash('success', 'Logout Successfully.');
 		return res.redirect('/reg');
 	});
 
-	// 注册和登录页面
+	// 注册页面
 	app.get('/reg', function(req, res){
 		res.render('reg', {
-			title: '注册和登录'
+			title: '注册'
 		});
+	});
+
+	// 登录页面
+	app.get('/login', function(req, res){
+		res.render('login', {
+			title: '登录'
+		});
+	});
+
+	// 登录表单
+	app.post('/login', function(req, res){
+
 	});
 
 	// 注册表单
