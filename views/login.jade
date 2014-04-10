@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	form.form-horizontal(method='post')
+		fieldset
+			legend 登录
+			div.form-group
+				input#username.form-control(name='username', placeholder='Username', type='username')
+			div.form-group
+				input#password.form-control(name='password', placeholder='Passwoed', type='password')
+			div.form-group
+				button.btn.btn-primary(type='submie') 登录
