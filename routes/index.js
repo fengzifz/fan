@@ -102,6 +102,22 @@ module.exports = function(app){
 
 	});
 
+	// 发表
+	app.post('/post', checkLogin);
+	app.post('/post', function(req, res){
+		var currentUser = req.session.user;
+		var post = new Post(currentUser.name, req.body.post);
+		post.save(function(err){
+			if(err){
+				req.flash('error', err);
+				return redirect('/');
+			}
+
+			req.flash('success', '发表成功');
+			res.redirect('/u/' + currentUser.name);
+		});
+	});
+
 	function checkLogin(req, res, next){
 		if(!req.session.user){
 			req.flash('error', '未登录');
