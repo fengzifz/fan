@@ -11,6 +11,7 @@ module.exports = function(app){
 	});
 
 	// 退出
+	app.get('/logout', checkLogin);
 	app.get('/logout', function(req, res){
 		req.session.user = null;
 		req.flash('success', 'Logout Successfully.');
@@ -18,6 +19,7 @@ module.exports = function(app){
 	});
 
 	// 注册页面
+	app.get('/reg', checkNotLogin);
 	app.get('/reg', function(req, res){
 		res.render('reg', {
 			title: '注册'
@@ -25,6 +27,7 @@ module.exports = function(app){
 	});
 
 	// 登录页面
+	app.get('/login', checkNotLogin); 
 	app.get('/login', function(req, res){
 		res.render('login', {
 			title: '登录'
@@ -32,6 +35,7 @@ module.exports = function(app){
 	});
 
 	// 登录表单
+	app.post('/logon', checkNotLogin);
 	app.post('/login', function(req, res){
 		var md5 = crypto.createHash('md5');
 		var password = md5.update(req.body.password).digest('base64');
@@ -97,4 +101,20 @@ module.exports = function(app){
 
 
 	});
+
+	function checkLogin(req, res, next){
+		if(!req.session.user){
+			req.flash('error', '未登录');
+			return res.redirect('/login');
+		}
+		next();
+	}
+
+	function checkNotLogin(req, res, next){
+		if(req.session.user){
+			req.flash('error', '已经登录');
+			return res.redirect('/');
+		}
+		next();
+	}
 }
