@@ -34,7 +34,7 @@ Post.prototype.save = function save(callback){
 			// 如果出错，关闭数据库，扔给回调函数
 			if(err){
 				mongodb.close();
-				return callback(err):
+				return callback(err);
 			}
 
 			// 为 user 属性添加索引
@@ -76,7 +76,7 @@ Post.get = function get(username, callback){
 
 				docs.forEach(function(doc, index){
 					var post = 	new Post(doc.user, doc.post, doc.time);
-					posts.pudh(post);
+					posts.push(post);
 				});
 
 				callback(null, posts);

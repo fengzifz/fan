@@ -1,6 +1,6 @@
 var crypto = require('crypto');
 var User = require('../models/user.js');
-var Post = require('../models.post.js');
+var Post = require('../models/post.js');
 
 // res.render 调用模板引擎，并将其产生的页面直接返回给客户端
 module.exports = function(app){
@@ -115,12 +115,12 @@ module.exports = function(app){
 			}
 
 			req.flash('success', '发表成功');
-			res.redirect('/u/' + currentUser.name);
+			res.redirect('/user/' + currentUser.name);
 		});
 	});
 
 	// 用户页面
-	app.get('/u/:user', function(req, res){
+	app.get('/user/:user', function(req, res){
 		User.get(req.params.user, function(err, user){
 			if(!user){
 				req.flash('error', '用户不存在');
@@ -135,7 +135,7 @@ module.exports = function(app){
 
 				res.render('user', {
 					title: user.name,
-					posts: posts
+					posts: post
 				});
 
 			});
