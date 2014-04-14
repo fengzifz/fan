@@ -6,8 +6,17 @@ var Post = require('../models/post.js');
 module.exports = function(app){
 	// Homepage
 	app.get('/', function(req, res){
-		res.render('index', {
-			title: '首页'
+		// Get post from mongo
+		Post.get(null, function(err, posts){
+			if(err){
+				posts = [];
+			}
+
+			res.render('index', {
+				title: '首页',
+				posts: posts
+			});
+
 		});
 	});
 
