@@ -45,7 +45,7 @@ module.exports = function(app){
 	});
 
 	// 登录表单
-	app.post('/logon', checkNotLogin);
+	app.post('/login', checkNotLogin);
 	app.post('/login', function(req, res){
 		var md5 = crypto.createHash('md5');
 		var password = md5.update(req.body.password).digest('base64');

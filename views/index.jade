@@ -3,6 +3,9 @@ extends layout
 block content
 	h1= title
 
+	if user
+		include say
+
 	if posts
 		ul
 			each v, i in posts
