@@ -59,7 +59,6 @@ app.configure(function(){
 		res.locals.user = req.session.user;
 		res.locals.error = req.flash('error');
 		res.locals.success = req.flash('success');
-		// console.log(res.locals.error + ', ' + res.locals.success);
 		next();
 	});
 
